@@ -1,0 +1,9 @@
+{% extends "index.html" %}
+
+{% block content %}
+  {% for user in users %}
+    <div>
+      {{ user.login }}
+    </div>
+  {% endfor %}
+{% endblock %}
