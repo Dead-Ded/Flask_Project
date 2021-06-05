@@ -87,6 +87,7 @@
                             <li><a class="dropdown-item" href="#">Новый пост...</a></li>
                             <li><a class="dropdown-item" href="#">Настройки</a></li>
                             <li><a class="dropdown-item" href="#">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('users') }}">Список пользователей</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -115,7 +116,7 @@
     <header>
         {% if current_user.is_authenticated %}
             <p>{{ current_user.login }}</p>
-            <p><a href="{{ url_for('users') }}">Список пользователей</a></p>
+<!--            <p><a href="{{ url_for('users') }}">Список пользователей</a></p>  -->
         {% else %}
             <h1 align="center">Требуется вход</h1>
         {% endif %}

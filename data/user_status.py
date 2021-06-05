@@ -13,6 +13,5 @@ class UserStatus(SqlAlchemyBase, UserMixin):
 
     users = relationship("User")
 
-
     def __repr__(self):
         return f'{self.status}'  # возвращает статус
