@@ -66,7 +66,7 @@ def users():  # Возвращает админу список пользова�
     if current_user.login != 'admin':
         return "Доступ запрещен"
     db_sess = db_session.create_session()
-    users = db_sess.query(User).order_by(User.login.desc())  # Присвоение переменной таблицы БД
+    users = db_sess.query(User).order_by(User.id.asc())  # Присвоение переменной таблицы БД
     return render_template('users.html', users=users)
 
 

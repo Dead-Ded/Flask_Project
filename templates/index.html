@@ -94,8 +94,19 @@
                         </ul>
                     </div>
                 {% else %}
-                    <li><a class="dropdown-item" href="{{ url_for('login') }}">Войти</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('register') }}">Зарегистрироваться</a></li>
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://www.yarkiy.ru//system/uploads/preview/good/32968/58_slate_grey.jpg"
+                                            alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="{{ url_for('login') }}">Войти</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('register') }}">Зарегистрироваться</a></li>
+                        </ul>
+                    </div>
+<!--                    <li><a class="dropdown-item" href="{{ url_for('login') }}">Войти</a></li>  -->
+<!--                    <li><a class="dropdown-item" href="{{ url_for('register') }}">Зарегистрироваться</a></li>  -->
                 {% endif %}
             </div>
         </div>
