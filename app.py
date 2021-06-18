@@ -5,12 +5,15 @@ from data import db_session
 from data.login import LoginForm
 from data.user import User
 from data.register import RegisterForm
+from data.section import Section
+from data.topic import Topic
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'JGKzpcce9ajD72k'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @app.route("/")
 @app.route("/index")
@@ -68,6 +71,20 @@ def users():  # Возвращает админу список пользова�
     db_sess = db_session.create_session()
     users = db_sess.query(User).order_by(User.id.asc())  # Присвоение переменной таблицы БД
     return render_template('users.html', users=users)
+
+
+@app.route('/sections')
+def sections():  # Возвращает админу список пользователей
+    db_sess = db_session.create_session()
+    sections = db_sess.query(Section).order_by(Section.id.asc())  # Присвоение переменной таблицы БД
+    return render_template('sections.html', sections=sections)
+
+
+@app.route('/topics/<section_id>')
+def topics(section_id):
+    db_sess = db_session.create_session()
+    topics = db_sess.query(Topic).filter(Topic.section_id == section_id).order_by(Topic.id.asc())
+    return render_template('topics.html', topics=topics)
 
 
 if __name__ == '__main__':

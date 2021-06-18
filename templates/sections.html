@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <table class="table table-striped">
+  <thead>
+      <th scope="col">id</th>
+      <th scope="col">Название</th>
+      <th scope="col">Описание</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for section in sections %}
+    <tr>
+      <th scope="row">{{ section.id }}</th>
+      <td><a href="{{ url_for('topics', section_id=section.id) }}">{{ section.name }}</a></td>
+      <td>{{ section.description }}</td>
+    </tr>
+
+  {% endfor %}
+  </tbody>
+  </table>
+{% endblock %}
+

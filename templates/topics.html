@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <table class="table table-striped">
+  <thead>
+      <th scope="col">id</th>
+      <th scope="col">Название</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for topic in topics %}
+    <tr>
+      <th scope="row">{{ topic.id }}</th>
+      <td>{{ topic.name }}</td>
+    </tr>
+
+  {% endfor %}
+  </tbody>
+  </table>
+{% endblock %}
