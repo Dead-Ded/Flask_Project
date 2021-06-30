@@ -19,6 +19,7 @@ class User(SqlAlchemyBase, UserMixin):
 
     status = relationship("UserStatus", foreign_keys=[status_id])
 
+
     def __repr__(self):
         return f'{self.login}'  # возвращает логин
 

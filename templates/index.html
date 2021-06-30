@@ -8,7 +8,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <!--    <style>-->
     <!--      .bd-placeholder-img {-->
     <!--        font-size: 1.125rem;-->
@@ -77,6 +77,7 @@
                 </form>
 
                 {% if current_user.is_authenticated %}
+                    <a href="##" style="margin-right: 5px">{{ current_user.login }}</a>
                     <div class="dropdown text-end">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -113,14 +114,12 @@
         </div>
     </header>
 
-    <header>
-        {% if current_user.is_authenticated %}
+    <div>
+        {% if not current_user.is_authenticated %}
             <p>{{ current_user.login }}</p>
-<!--            <p><a href="{{ url_for('users') }}">Список пользователей</a></p>  -->
-        {% else %}
             <h1 align="center">Требуется вход</h1>
         {% endif %}
-    </header>
+    </div>
 
     <main role="main" class="container">
         {% block content %}{% endblock %}

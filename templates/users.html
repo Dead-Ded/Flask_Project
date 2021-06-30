@@ -2,26 +2,27 @@
 
 {% block content %}
     <table class="table table-striped">
-  <thead>
-      <th scope="col">id</th>
-      <th scope="col">Логин</th>
-      <th scope="col">Дата регистрации</th>
-      <th scope="col">Статус</th>
-      <th scope="col">Удален</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for user in users %}
-    <tr>
-      <th scope="row">{{ user.id }}</th>
-      <td>{{ user.login }}</td>
-      <td>{{ user.registration_date }}</td>
-      <td>{{ user.status}}</td>
-      <td>{% if user.deleted == "True" %}{% print("Удален") %}{% else %}{% print("Не удален") %}{% endif %}</td>
-    </tr>
-
-  {% endfor %}
-  </tbody>
-  </table>
+        <thead>
+        <tr>
+              <th scope="col">id</th>
+              <th scope="col">Логин</th>
+              <th scope="col">Дата регистрации</th>
+              <th scope="col">Статус</th>
+              <th scope="col">Удален</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <th scope="row">{{ user.id }}</th>
+              <td>{{ user.login }}</td>
+              <td>{{ user.registration_date }}</td>
+              <td>{{ user.status}}</td>
+              <td>{% if user.deleted == "True" %}{% print("Удален") %}{% else %}{% print("Не удален") %}{% endif %}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('clear') }}">Скрыть</a>
 {% endblock %}
 

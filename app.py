@@ -7,6 +7,7 @@ from data.user import User
 from data.register import RegisterForm
 from data.section import Section
 from data.topic import Topic
+from data.post import Post
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'JGKzpcce9ajD72k'
@@ -21,7 +22,7 @@ def about():
     return render_template("index.html")
 
 
-@login_manager.user_loader
+@login_manager.user_loader  # Логин
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
@@ -66,12 +67,16 @@ def logout():  # Выход
 @app.route('/users')
 @login_required
 def users():  # Возвращает админу список пользователей
-    if current_user.login != 'admin':
+    if current_user.status_id != 1:
         return "Доступ запрещен"
     db_sess = db_session.create_session()
     users = db_sess.query(User).order_by(User.id.asc())  # Присвоение переменной таблицы БД
     return render_template('users.html', users=users)
 
+
+@app.route('/')
+def clear():
+    return render_template("clear.html")
 
 @app.route('/sections')
 def sections():  # Возвращает админу список пользователей
@@ -80,11 +85,22 @@ def sections():  # Возвращает админу список пользов
     return render_template('sections.html', sections=sections)
 
 
-@app.route('/topics/<section_id>')
+@app.route('/sections/<section_id>/topics')
 def topics(section_id):
     db_sess = db_session.create_session()
     topics = db_sess.query(Topic).filter(Topic.section_id == section_id).order_by(Topic.id.asc())
-    return render_template('topics.html', topics=topics)
+    section = db_sess.query(Section).filter(Section.id == section_id).first().name
+    return render_template('topics.html', topics=topics, section=section)
+
+
+@app.route('/sections/<section_id>/topics/<topic_id>/posts')
+def posts(section_id, topic_id):
+    db_sess = db_session.create_session()
+    posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc())
+    topic = db_sess.query(Topic).filter(Topic.id == topic_id).first().name
+    section = db_sess.query(Section).filter(Section.id == section_id).first().name
+    return render_template('posts.html', section_id=section_id, section=section, topic=topic,
+                                                                                        posts=posts)
 
 
 if __name__ == '__main__':

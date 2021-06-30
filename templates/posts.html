@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+
+{% block content %}
+<!--    {% for p in path %}-->
+<!--        <a href="">{{ p }}</a>-->
+<!--        {% if not loop.last %}-->
+<!--              ->-->
+<!--        {% endif %}-->
+<!--    {% endfor %}-->
+    <table border="1" width="100%">
+        <th>
+            <a href="{{ url_for('sections') }}">Форум</a> ->
+            <a href="{{ url_for('topics', section_id=section_id) }}">{{ section }}</a> ->
+            {{ topic }}
+        </th>
+    </table>
+    <h1 align="center">Посты</h1>
+    {% for post in posts %}
+
+            <table align="left" border="1" width="100%">
+                    <thead>
+                        <tr>
+                            <th scope="col"><a href="#1">{{ post.user }}</a>
+                                <span style="margin-left: 20px; color: #747474">{{ post.date }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td>{{ post.message }}</td>
+                        </tr>
+                    </tbody>
+            </table>
+        <br>
+
+    {% endfor %}
+    {% if current_user.is_authenticated %}
+        <textarea class="form-control" placeholder="Введите сообщение"></textarea>
+    {% endif %}
+
+    <div align="right" style="margin-top: 10px"><button type="submit" class="btn btn-primary">Отправить</button></div>
+{% endblock %}

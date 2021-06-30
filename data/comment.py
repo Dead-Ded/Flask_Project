@@ -10,8 +10,7 @@ class Comment(SqlAlchemyBase, UserMixin):
     __tablename__ = 'comments'  # Подключение к таблице 'users' базы данных
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)  # Выбор столбца
-    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'),
-                                nullable=True)
+    user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('users.id'))
     section_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('sections.id'),
                                    nullable=True)
     topic_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('topics.id'), nullable=True)
@@ -21,8 +20,9 @@ class Comment(SqlAlchemyBase, UserMixin):
     message = sqlalchemy.Column(sqlalchemy.String)
     date = sqlalchemy.Column(sqlalchemy.TIMESTAMP, nullable=True)
     replyed = sqlalchemy.Column(sqlalchemy.Boolean, nullable=True)
-    parrent_comment_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('comments.id'),
-                                           nullable=True)
+    parrent_comment_id = sqlalchemy.Column(sqlalchemy.Integer,
+                                           # sqlalchemy.ForeignKey('comments.id'),
+                                                    nullable=True)
 
     def __repr__(self):
         return f'{self.message}'
