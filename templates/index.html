@@ -56,7 +56,7 @@
   </symbol>
 </svg>
 
-    <header class="p-3 mb-3 border-bottom">
+    <header class="p-3 mb-3 border-bottom" style="">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
@@ -77,7 +77,7 @@
                 </form>
 
                 {% if current_user.is_authenticated %}
-                    <a href="##" style="margin-right: 5px">{{ current_user.login }}</a>
+                    <a id="user-url" href="##" style="margin-right: 5px">{{ current_user.login }}</a>
                     <div class="dropdown text-end">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle"
                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">

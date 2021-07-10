@@ -7,35 +7,102 @@
 <!--              ->-->
 <!--        {% endif %}-->
 <!--    {% endfor %}-->
-    <table border="1" width="100%">
-        <th>
-            <a href="{{ url_for('sections') }}">Форум</a> ->
-            <a href="{{ url_for('topics', section_id=section_id) }}">{{ section }}</a> ->
-            {{ topic }}
-        </th>
-    </table>
-    <h1 align="center">Посты</h1>
-    {% for post in posts %}
+    <script src="https://cdn.tiny.cloud/1/hv7dr4nbha45czcugqwrkezgu8t678t7bolcb1x2ge7ja1vq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script></script>
+    <script>
+        tinymce.init({
+          selector: 'textarea#basic-example',
+          height: 500,
+          menubar: false,
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+          ],
+          toolbar: 'undo redo | formatselect | ' +
+          'bold italic backcolor | alignleft aligncenter ' +
+          'alignright alignjustify | bullist numlist outdent indent | ' +
+          'removeformat | help',
+          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
 
-            <table align="left" border="1" width="100%">
-                    <thead>
-                        <tr>
-                            <th scope="col"><a href="#1">{{ post.user }}</a>
-                                <span style="margin-left: 20px; color: #747474">{{ post.date }}</span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                          <td>{{ post.message }}</td>
-                        </tr>
-                    </tbody>
-            </table>
-        <br>
+    </script>
+
+        <div class="row border" style="background-color: #f3f3f4">
+            <img class="col-2" src="{{ url_for('static', filename='img/forum.png') }}" width="80" height="80">
+            <div class="col">
+                <h4>
+                    {{ topic }}
+                </h4>
+                <a href="{{ url_for('sections') }}">Форум</a> ->
+                <a href="{{ url_for('topics', section_id=section_id) }}">{{ section }}</a> ->
+                {{ topic }}
+            </div>
+            {% if current_user.is_authenticated %}
+                <div class="col-3 border" style="background-color: #f3f3f4">
+                    <a href="#bottom">Написать сообщение</a>
+                </div>
+            {% endif %}
+        </div>
+    <div class="row border" style="background-color: #f3f3f4">
+        <h1 class="col" align="center">Посты</h1>
+    </div>
+    <hr>
+<!--    <div align="right">-->
+<!--        <form>-->
+<!--            <a href="#basic-example">-->
+<!--                <button type="button" class="btn btn-primary" style="border-color: #6c757d;-->
+<!--                                                        background-color: #6c757d">||<br>\/</button>-->
+<!--            </a>-->
+<!--        </form>-->
+<!--    </div>-->
+    {% set n = namespace(x = 0) %}
+    {% for post in posts %}
+        {% set n.x = n.x + 1 %}
+
+<!--            <table align="left" border="1" width="100%">-->
+<!--                    <thead>-->
+<!--                        <tr>-->
+<!--                            <th scope="col"><a href="#1">{{ post.user }}</a>-->
+<!--                                <span style="margin-left: 20px; color: #747474">{{ post.date }}</span></th>-->
+<!--                        </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                        <tr>-->
+<!--                          <td>{{ post.message }}</td>-->
+<!--                        </tr>-->
+<!--                    </tbody>-->
+<!--            </table>-->
+        <div class="row border" style="margin-bottom: 5px">
+            <div class="col-2 border" style="background-color: #f3f3f4">
+                <a href="##">{{ post.user }}</a>
+                <br>
+                <span style="font-size: 9pt; color: #6c6c6c">
+                    Регистрация:
+                    {{ post.user.registration_date.strftime('%d.%m.%Y') }}
+                </span>
+            </div>
+            <div class="col border">
+                <div class="border-bottom row" style="background-color: #f3f3f4" align="right">
+                    <a href="##">{{ n.x }}</a>
+                </div>
+                <div style="font-size: 8pt; color: #6c6c6c; margin-top: 3px">
+                    {{ post.date.strftime('%d.%m.%Y %H:%M:%S') }}
+                </div>
+                <hr style="margin-top: 3px; margin-bottom: 3px">
+                <div style="margin-bottom: 3px">
+                    {{ post.message | safe}}
+                </div>
+            </div>
+        </div>
 
     {% endfor %}
     {% if current_user.is_authenticated %}
-        <textarea class="form-control" placeholder="Введите сообщение"></textarea>
+        <form class="form-text" name="form-post" action="" method="post">
+            <textarea id="basic-example" name="post-message" class="form-control"
+                                                placeholder="Введите сообщение"></textarea>
+            <div align="right" style="margin-top: 10px"><button
+                    type="submit" accesskey="enter" class="btn btn-primary">Отправить</button></div>
+        </form>
+        <div id="bottom"></div>
     {% endif %}
-
-    <div align="right" style="margin-top: 10px"><button type="submit" class="btn btn-primary">Отправить</button></div>
 {% endblock %}

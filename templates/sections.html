@@ -1,32 +1,55 @@
 {% extends "index.html" %}
 
 {% block content %}
-    <table border="1" width="100%">
-        <th>
-            Форум
-        </th>
-    </table>
-    <table class="table table-striped">
-      <thead>
-      <h1 align="center">Разделы</h1>
-      </thead>
-      <hr color="red">
-      <thead>
-          <th scope="col">id</th>
-          <th scope="col">Название</th>
-          <th scope="col">Описание</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for section in sections %}
-        <tr>
-          <th scope="row">{{ section.id }}</th>
-          <td><a href="{{ url_for('topics', section_id=section.id) }}">{{ section.name }}</a></td>
-          <td>{{ section.description }}</td>
-        </tr>
+    <div class="row border col" style="background-color: #f3f3f4">
+            <img class="col-2" src="{{ url_for('static', filename='img/forum.png') }}" width="80" height="80">
+            <div class="col">
+                <h4>
+                    Форум
+                </h4>
+            </div>
+    </div>
+    <div class="row border" style="background-color: #f3f3f4">
+        <h1 class="col" align="center">Разделы</h1>
+    </div>
+    <hr>
+<!--    <table class="table table-striped">-->
+<!--      <thead>-->
+<!--          <th scope="col">id</th>-->
+<!--          <th scope="col">Название</th>-->
+<!--          <th scope="col">Описание</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      {% for section in sections %}-->
+<!--        <tr>-->
+<!--          <th scope="row">{{ section.id }}</th>-->
+<!--          <td><a href="{{ url_for('topics', section_id=section.id) }}">{{ section.name }}</a></td>-->
+<!--          <td>{{ section.description }}</td>-->
+<!--        </tr>-->
 
-      {% endfor %}
-      </tbody>
-    </table>
+<!--      {% endfor %}-->
+<!--      </tbody>-->
+<!--    </table>-->
+
+    <div class="row border" style="margin-bottom: 3px; background-color: #f3f3f4">
+        <div class="col-1 fw-bold" style="margin: 3px">
+            id
+        </div>
+        <div class="col-3 fw-bold" style="margin: 3px">
+            Название
+        </div>
+        <div class="col-1 fw-bold" style="margin: 3px">
+            Описание
+        </div>
+    </div>
+    {% for section in sections %}
+        <div class="row border" style="margin-bottom: 3px">
+            <div class="col-1" style="margin: 3px">{{ section.id }}</div>
+            <div class="col-3" style="margin: 3px"><a
+                    href="{{ url_for('topics', section_id=section.id) }}">{{ section.name }}</a></div>
+            <div class="col" style="margin: 3px">{{ section.description }}</div>
+        </div>
+    {% endfor %}
 {% endblock %}
 

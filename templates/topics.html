@@ -1,27 +1,43 @@
 {% extends "index.html" %}
 
 {% block content %}
-    <table border="1" width="100%">
-        <th>
-            <a href="{{ url_for('sections') }}">Форум</a> ->
-            {{ section }}
-        </th>
-    </table>
-        <h1 align="center">Темы</h1>
-    <table class="table table-striped">
-      <thead>
-          <th scope="col">id</th>
-          <th scope="col">Название</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div class="row border col" style="background-color: #f3f3f4">
+            <img class="col-2" src="{{ url_for('static', filename='img/forum.png') }}" width="80" height="80">
+            <div class="col">
+                <h4>
+                    {{ section }}
+                </h4>
+                <div>
+                    <a href="{{ url_for('sections') }}">Форум</a> ->
+                    {{ section }}
+                </div>
+            </div>
+    </div>
+    <div class="row border" style="background-color: #f3f3f4">
+        <h1 class="col" align="center">Темы</h1>
+    </div>
+    <hr>
+
+<!--    <table border="1" width="100%">-->
+<!--        <th>-->
+<!--            <a href="{{ url_for('sections') }}">Форум</a> ->-->
+<!--            {{ section }}-->
+<!--        </th>-->
+<!--    </table>-->
+<!--        <h1 align="center">Темы</h1>-->
+    <div>
+      <div class="border row" style="background-color: #f3f3f4; margin-bottom: 5px">
+              <div class="col-1 fw-bold" style="margin: 3px">id</div>
+              <div class="col fw-bold" style="margin: 3px">Название</div>
+      </div>
+
       {% for topic in topics %}
-        <tr>
-          <th scope="row">{{ topic.id }}</th>
-          <td><a href="{{ url_for('posts', section_id=topic.section_id, topic_id=topic.id) }}">{{ topic.name }}</a></td>
-        </tr>
+        <div class="border row" style="margin-bottom: 5px">
+          <div class="col-1" style="margin: 3px"><b>{{ topic.id }}</b></div>
+          <div class="col" style="margin: 3px"><a href="{{ url_for('posts', section_id=topic.section_id, topic_id=topic.id) }}">{{ topic.name }}</a></div>
+        </div>
 
       {% endfor %}
-      </tbody>
-    </table>
+
+    </div>
 {% endblock %}

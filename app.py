@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+import datetime
 
 from data import db_session
 from data.login import LoginForm
@@ -49,10 +50,11 @@ def register():  # Регистрация
         if db_sess.query(User).filter(User.login == form.login.data).first():
             return render_template('register.html', title='Register', form=form,
                                    message="Такой пользователь уже существует")
-        user = User(login=form.login.data)
+        user = User(login=form.login.data, deleted=False, status_id=3,  # Созданире строки для БД
+                                    registration_date=datetime.date.today())
         user.set_password(form.password.data)
-        db_sess.add(user)
-        db_sess.commit()
+        db_sess.add(user)  # <-
+        db_sess.commit()  # <-
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
@@ -93,12 +95,19 @@ def topics(section_id):
     return render_template('topics.html', topics=topics, section=section)
 
 
-@app.route('/sections/<section_id>/topics/<topic_id>/posts')
+@app.route('/sections/<section_id>/topics/<topic_id>/posts', methods=['GET', 'POST'])
 def posts(section_id, topic_id):
     db_sess = db_session.create_session()
     posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc())
     topic = db_sess.query(Topic).filter(Topic.id == topic_id).first().name
     section = db_sess.query(Section).filter(Section.id == section_id).first().name
+    # if current_user.is_authenticated:
+    if request.method == 'POST':
+        post_text = Post(message=request.form['post-message'], date=datetime.datetime.now(),
+                    topic_id=topic_id, deleted=False,
+                         user_id=current_user.id)
+        db_sess.add(post_text)
+        db_sess.commit()
     return render_template('posts.html', section_id=section_id, section=section, topic=topic,
                                                                                         posts=posts)
 

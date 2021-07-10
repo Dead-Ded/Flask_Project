@@ -10,3 +10,21 @@ thead{
 table{
 
 }
+#user-url{
+    color: #440e0e
+}
+#user-url:visited{
+    color: #440e0e
+}
+a{
+    color: #06357a
+}
+a:visited{
+    color: #06357a
+}
+a:active{
+    color: #0f56ba
+}
+a:hover{
+    color: #0f56ba
+}
