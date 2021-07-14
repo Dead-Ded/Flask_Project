@@ -8,7 +8,7 @@
               <th scope="col">Логин</th>
               <th scope="col">Дата регистрации</th>
               <th scope="col">Статус</th>
-              <th scope="col">Удален</th>
+              <th scope="col">Забанить</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,23 @@
               <td>{{ user.login }}</td>
               <td>{{ user.registration_date }}</td>
               <td>{{ user.status}}</td>
-              <td>{% if user.deleted == "True" %}{% print("Удален") %}{% else %}{% print("Не удален") %}{% endif %}</td>
+<!--              <td>{% if user.deleted == "True" %}{% print("Удален") %}{% else %}{% print("Не удален") %}{% endif %}</td>-->
+                <td>
+                    {% if current_user.status_id == 1  %}
+                        <form action="" method="post">
+                            <input type="hidden" value="{{ user.id }}" name="user_id">
+                            <input class="btn btn-primary" type="submit"
+                                    value="{% if user.deleted == 0%}Забанить
+                                          {% else %}Разбанить{% endif %}" align="center"> </input>
+                        </form>
+                    {% else %}
+                        {% if user.deleted == "True" %}
+                            {% print("Удален") %}
+                        {% else %}
+                            {% print("Не удален") %}
+                        {% endif %}
+                    {% endif %}
+                </td>
             </tr>
           {% endfor %}
         </tbody>

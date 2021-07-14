@@ -34,7 +34,8 @@
       {% for topic in topics %}
         <div class="border row" style="margin-bottom: 5px">
           <div class="col-1" style="margin: 3px"><b>{{ topic.id }}</b></div>
-          <div class="col" style="margin: 3px"><a href="{{ url_for('posts', section_id=topic.section_id, topic_id=topic.id) }}">{{ topic.name }}</a></div>
+          <div class="col" style="margin: 3px"><a href="{{ url_for('posts', section_id=topic.section_id, topic_id=topic.id,
+                        page_block=0) }}">{{ topic.name }}</a></div>
         </div>
 
       {% endfor %}

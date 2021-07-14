@@ -66,12 +66,18 @@ def logout():  # Выход
     return redirect("/")
 
 
-@app.route('/users')
+@app.route('/users', methods=["POST", "GET"])
 @login_required
 def users():  # Возвращает админу список пользователей
     if current_user.status_id != 1:
         return "Доступ запрещен"
     db_sess = db_session.create_session()
+    if request.method == 'POST':
+        if request.form['user_id']:
+            print(request.form['user_id'])
+            user = db_sess.query(User).filter(User.id == request.form['user_id']).first()
+            user.deleted = not user.deleted
+            db_sess.commit()
     users = db_sess.query(User).order_by(User.id.asc())  # Присвоение переменной таблицы БД
     return render_template('users.html', users=users)
 
@@ -95,10 +101,10 @@ def topics(section_id):
     return render_template('topics.html', topics=topics, section=section)
 
 
-@app.route('/sections/<section_id>/topics/<topic_id>/posts', methods=['GET', 'POST'])
-def posts(section_id, topic_id):
+@app.route('/sections/<section_id>/topics/<topic_id>/posts/<page_block>', methods=['GET', 'POST'])
+def posts(section_id, topic_id, page_block=0):
     db_sess = db_session.create_session()
-    posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc())
+    posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc()).slice(int(page_block) * 3, int(page_block) * 3 + 3)
     topic = db_sess.query(Topic).filter(Topic.id == topic_id).first().name
     section = db_sess.query(Section).filter(Section.id == section_id).first().name
     # if current_user.is_authenticated:
@@ -115,3 +121,4 @@ def posts(section_id, topic_id):
 if __name__ == '__main__':
     db_session.global_init("db/db.db")
     app.run(port=8000, host="127.0.0.1")
+    # app.run(host="0.0.0.0")
