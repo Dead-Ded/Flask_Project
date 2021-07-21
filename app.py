@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import datetime
+import os
 
 from data import db_session
 from data.login import LoginForm
@@ -123,5 +124,6 @@ def posts(section_id, topic_id, page_block=0):
 
 if __name__ == '__main__':
     db_session.global_init("db/db.db")
-    app.run(port=8000, host="127.0.0.1")
-    # app.run(host="0.0.0.0")
+    # app.run(port=8000, host="127.0.0.1")
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host="0.0.0.0", port=port)
