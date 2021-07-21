@@ -32,7 +32,7 @@
 <!--      </tbody>-->
 <!--    </table>-->
 
-    <div class="row border" style="margin-bottom: 3px; background-color: #f3f3f4">
+    <div class="row border" style="margin-bottom: 5px; background-color: #f3f3f4">
         <div class="col-1 fw-bold" style="margin: 3px">
             id
         </div>
@@ -44,7 +44,7 @@
         </div>
     </div>
     {% for section in sections %}
-        <div class="row border" style="margin-bottom: 3px">
+        <div class="row border" style="margin-bottom: 5px">
             <div class="col-1" style="margin: 3px">{{ section.id }}</div>
             <div class="col-3" style="margin: 3px"><a
                     href="{{ url_for('topics', section_id=section.id) }}">{{ section.name }}</a></div>

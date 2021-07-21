@@ -86,6 +86,7 @@ def users():  # Возвращает админу список пользова�
 def clear():
     return render_template("clear.html")
 
+
 @app.route('/sections')
 def sections():  # Возвращает админу список пользователей
     db_sess = db_session.create_session()
@@ -104,7 +105,9 @@ def topics(section_id):
 @app.route('/sections/<section_id>/topics/<topic_id>/posts/<page_block>', methods=['GET', 'POST'])
 def posts(section_id, topic_id, page_block=0):
     db_sess = db_session.create_session()
-    posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc()).slice(int(page_block) * 3, int(page_block) * 3 + 3)
+    posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc()).slice(int(page_block) * 8,
+                                                                                                int(page_block) * 8 + 8)
+    # page_block =
     topic = db_sess.query(Topic).filter(Topic.id == topic_id).first().name
     section = db_sess.query(Section).filter(Section.id == section_id).first().name
     # if current_user.is_authenticated:
@@ -115,7 +118,7 @@ def posts(section_id, topic_id, page_block=0):
         db_sess.add(post_text)
         db_sess.commit()
     return render_template('posts.html', section_id=section_id, section=section, topic=topic,
-                                                                                        posts=posts)
+                                                    posts=posts, page_block=int(page_block), page=int(page_block)+1)
 
 
 if __name__ == '__main__':

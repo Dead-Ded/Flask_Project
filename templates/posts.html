@@ -56,9 +56,9 @@
 <!--        </form>-->
 <!--    </div>-->
     {% set n = namespace(x = 0) %}
+    {% set n.x = n.x + page_block * 8 %}
     {% for post in posts %}
         {% set n.x = n.x + 1 %}
-
 <!--            <table align="left" border="1" width="100%">-->
 <!--                    <thead>-->
 <!--                        <tr>-->
@@ -94,8 +94,8 @@
                 </div>
             </div>
         </div>
-
     {% endfor %}
+
     {% if current_user.is_authenticated %}
         <form class="form-text" name="form-post" action="" method="post">
             <textarea id="basic-example" name="post-message" class="form-control"
