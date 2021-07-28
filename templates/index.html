@@ -118,6 +118,8 @@
         {% if not current_user.is_authenticated %}
             <p>{{ current_user.login }}</p>
             <h1 align="center">Требуется вход</h1>
+            <h3 align="center"><a href="{{ url_for('register') }}">Регистрация</a></h3>
+            <h3 align="center"><a href="{{ url_for('login') }}">Вход</a></h3>
         {% endif %}
     </div>
 
