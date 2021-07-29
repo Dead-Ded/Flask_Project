@@ -55,8 +55,20 @@
 <!--            </a>-->
 <!--        </form>-->
 <!--    </div>-->
+
     {% set n = namespace(x = 0) %}
     {% set n.x = n.x + page_block * 8 %}
+    <div align="center", style="font-size: 15pt">
+        {% if x % 8 != 0: %}
+            {% for i in range(x // 8 + 1): %}
+                <a href="/sections/1/topics/1/posts/{{ i }}">{{ i + 1 }}</a>
+            {% endfor %}
+        {% else %}
+            {% for i in range(x // 8): %}
+                <a href="/sections/1/topics/1/posts/{{ i }}">{{ i + 1}}</a>
+            {% endfor %}
+        {% endif %}
+    </div>
     {% for post in posts %}
         {% set n.x = n.x + 1 %}
 <!--            <table align="left" border="1" width="100%">-->

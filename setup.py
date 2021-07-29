@@ -106,7 +106,11 @@ def topics(section_id):
 @app.route('/sections/<section_id>/topics/<topic_id>/posts/<page_block>', methods=['GET', 'POST'])
 def posts(section_id, topic_id, page_block=0):
     db_sess = db_session.create_session()
-    posts = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc()).slice(int(page_block) * 8,
+    post_count = db_sess.query(Post).filter(Post.topic_id == topic_id).order_by(Post.id.asc())
+    x = 0
+    for post in post_count:
+        x += 1
+    posts = post_count.slice(int(page_block) * 8,
                                                                                                 int(page_block) * 8 + 8)
     # page_block =
     topic = db_sess.query(Topic).filter(Topic.id == topic_id).first().name
@@ -118,8 +122,8 @@ def posts(section_id, topic_id, page_block=0):
                          user_id=current_user.id)
         db_sess.add(post_text)
         db_sess.commit()
-    return render_template('posts.html', section_id=section_id, section=section, topic=topic,
-                                                    posts=posts, page_block=int(page_block), page=int(page_block)+1)
+    return render_template('posts.html', section_id=section_id, section=section, topic=topic, x=x,
+                post_count=post_count, posts=posts, page_block=int(page_block), page=int(page_block)+1)
 
 
 if __name__ == '__main__':
