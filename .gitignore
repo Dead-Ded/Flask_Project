@@ -1,0 +1,4 @@
+/venv
+/.idia
+__pycache__/
+test.py
